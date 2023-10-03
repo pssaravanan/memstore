@@ -1,0 +1,1 @@
+char* rand_str(int);
