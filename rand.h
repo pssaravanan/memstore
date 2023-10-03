@@ -1,1 +1,1 @@
-char* rand_str(int);
+char* test_rand_str(int);

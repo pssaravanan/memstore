@@ -1,3 +1,5 @@
 .vscode
 a.out
 db.txt
+*.o
+test_redis

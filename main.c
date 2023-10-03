@@ -1,6 +1,11 @@
 #include<stdio.h>
 #include<stdlib.h>
 #include<time.h>
+#include"rand.h"
+#include <sys/socket.h>
+#include <netinet/in.h>
+#include <unistd.h>
+#include "server.h"
 
 #define HASH_IN_SIZE 1000
 
@@ -63,19 +68,22 @@ void printDb(store *db){
     fclose(fptr);
 }
 
+
 int main(int argc, char *argv[]){
 
     store *db = (store *)malloc(sizeof(store));
     printf("%ld,%ld,%ld, %d", sizeof(db -> hash_table), sizeof(char *), sizeof(int), db->hash_table[0] == NULL);
     srand((unsigned) time(&t));
 
-    int j = 0;
-    while(j <= 100000){
-        char *key = rand_str(5);
-        char *value = rand_str(10);
-        setKey(db, key, value);
-        j = j + 1;
-    }
+    // printf("%s", test_rand_str(10));
+    // int j = 0;
+    // while(j <= 100000){
+    //     char *key = rand_str(5);
+    //     char *value = rand_str(10);
+    //     setKey(db, key, value);
+    //     j = j + 1;
+    // }
+    server *s = createServer(0, 8000, AF_INET);
     printf("Added keys\n");
     printDb(db);
 }
