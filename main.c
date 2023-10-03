@@ -6,22 +6,7 @@
 #include <netinet/in.h>
 #include <unistd.h>
 #include "server.h"
-
-#define HASH_IN_SIZE 1000
-
-struct _dataitem {
-    char *key;
-    char *val;
-    int expiry;
-    struct _dataitem *next;
-};
-
-typedef struct _dataitem dataitem;
-
-
-typedef struct {
-    dataitem *hash_table[HASH_IN_SIZE];
-} store;
+#include "store.h"
 
 
 int hashfunc(char *key) {
@@ -38,34 +23,6 @@ char* rand_str(int len){
     }
     res[len] = '\0';
     return res;
-}
-
-void setKey(store *db, char *key, char *val) {
-    dataitem *item = (dataitem *)malloc(sizeof(dataitem));
-    item -> key = key;
-    item -> val = val;
-    int keyPos = hashfunc(key) % HASH_IN_SIZE;
-    dataitem *existing = db->hash_table[keyPos];
-    db->hash_table[keyPos] = item;
-    item -> next = existing;
-    printf("%d,%s,%s\n", keyPos, item->key, item->val);
-}
-
-void printDb(store *db){
-    int i =0;
-    FILE *fptr;
-    fptr = fopen("./db.txt", "w");
-    fprintf(fptr, "pos,key,val\n");
-    while(db->hash_table[i] != NULL) {
-        dataitem *curr = db -> hash_table[i];
-        printf("writing index: %d", i);
-        while(curr != NULL) {
-            fprintf(fptr, "%d,%s,%s\n", i, curr -> key, curr -> val);
-            curr = curr->next;
-        }
-        i = i + 1;
-    }
-    fclose(fptr);
 }
 
 
