@@ -29,3 +29,16 @@ server* createServer(uint32_t addr, int port, sa_family_t family){
     }
     return s;
 }
+
+client* acceptConnection(server *s){
+    client *c = (client *) malloc(sizeof(client));
+    int addresslen = sizeof(s -> address);
+    if ((c -> socketfd
+         = accept(s -> socketfd, (struct sockaddr*)& s -> address,
+                  (socklen_t*)&addresslen))
+        < 0) {
+        perror("accept");
+        exit(EXIT_FAILURE);
+    }
+    return c;
+}

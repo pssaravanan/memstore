@@ -7,4 +7,11 @@ typedef struct {
     int socketfd;
 } server;
 
+typedef struct {
+    int socketfd;
+} client;
+
+
 server* createServer(uint32_t addr, int port, sa_family_t family);
+
+client* acceptConnection(server *s);

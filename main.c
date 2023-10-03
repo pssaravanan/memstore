@@ -74,6 +74,7 @@ int main(int argc, char *argv[]){
     store *db = (store *)malloc(sizeof(store));
     printf("%ld,%ld,%ld, %d", sizeof(db -> hash_table), sizeof(char *), sizeof(int), db->hash_table[0] == NULL);
     srand((unsigned) time(&t));
+    char buffer[1024] = { 0 };
 
     // printf("%s", test_rand_str(10));
     // int j = 0;
@@ -84,6 +85,8 @@ int main(int argc, char *argv[]){
     //     j = j + 1;
     // }
     server *s = createServer(0, 8000, AF_INET);
-    printf("Added keys\n");
+    client *c = acceptConnection(s);
+    read(c -> socketfd, &buffer, 1024);
+    printf("read %s \n", buffer);
     printDb(db);
 }
