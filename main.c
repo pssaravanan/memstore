@@ -9,10 +9,6 @@
 #include "store.h"
 
 
-int hashfunc(char *key) {
-    return (int)key[0] - 97;
-}
-
 char *chs = "abcdefghijklmnopqrstuvwxyz";
 time_t t;
 

@@ -2,6 +2,10 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+int hashfunc(char *key) {
+    return (int)key[0] - 97;
+}
+
 void setKey(store *db, char *key, char *val) {
     dataitem *item = (dataitem *)malloc(sizeof(dataitem));
     item -> key = key;
