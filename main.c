@@ -5,8 +5,8 @@
 #include <sys/socket.h>
 #include <netinet/in.h>
 #include <unistd.h>
-#include "server.h"
 #include "store.h"
+#include "request.h"
 
 
 char *chs = "abcdefghijklmnopqrstuvwxyz";
@@ -27,7 +27,7 @@ int main(int argc, char *argv[]){
     store *db = (store *)malloc(sizeof(store));
     printf("%ld,%ld,%ld, %d", sizeof(db -> hash_table), sizeof(char *), sizeof(int), db->hash_table[0] == NULL);
     srand((unsigned) time(&t));
-    char buffer[1024] = { 0 };
+    
 
     // printf("%s", test_rand_str(10));
     // int j = 0;
@@ -38,8 +38,9 @@ int main(int argc, char *argv[]){
     //     j = j + 1;
     // }
     server *s = createServer(0, 8000, AF_INET);
-    client *c = acceptConnection(s);
-    read(c -> socketfd, &buffer, 1024);
-    printf("read %s \n", buffer);
+    while(1){
+        client *c = acceptConnection(s);
+        spawn_thread_and_process(&processRequest, c);
+    }
     printDb(db);
 }

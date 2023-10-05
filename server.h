@@ -2,6 +2,7 @@
 #include <netinet/in.h>
 #include <unistd.h>
 #include<stdlib.h>
+#include "thread.h"
 typedef struct {
     struct sockaddr_in address;
     int socketfd;
@@ -9,6 +10,7 @@ typedef struct {
 
 typedef struct {
     int socketfd;
+    thread_id t_id;
 } client;
 
 
